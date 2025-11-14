@@ -1,4 +1,5 @@
 import CategorySelector from "@/components/CategorySelector";
+import ContentTitleInput from "@/components/ContentTitleInput";
 import MainImageUploader from "@/components/MainImageUploader";
 import SubImageUploader from "@/components/SubImageUploader";
 
@@ -16,6 +17,9 @@ export default function Home() {
       <section>
         <div className="mt-10">
           <CategorySelector />
+        </div>
+        <div className="mt-10">
+          <ContentTitleInput />
         </div>
       </section>
     </main>
