@@ -3,6 +3,7 @@ import ContentTitleInput from "@/components/ContentTitleInput";
 import MainImageUploader from "@/components/MainImageUploader";
 import SubImageUploader from "@/components/SubImageUploader";
 import ActivityTypeSelector from "@/components/ActivityTypeSelector";
+import DetailSessionForm from "@/components/DetailSessionForm";
 
 export default function Home() {
   return (
@@ -24,6 +25,9 @@ export default function Home() {
         </div>
         <div className="mt-10">
           <ActivityTypeSelector />
+        </div>
+        <div className="mt-10">
+          <DetailSessionForm />
         </div>
       </section>
     </main>
