@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const CategorySelector = () => {
   return (
-    <div className="w-[328px] md:w-[510px]">
+    <div className="w-[328px] md:w-[510px] mx-auto md:mx-0">
       <h2 className="font-bold text-[22px] md:text-[28px]">카테고리</h2>
       <div className="relative mt-3 md:mt-4">
         <input
