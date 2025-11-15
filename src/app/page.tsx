@@ -7,10 +7,15 @@ import MainImageUploader from "@/components/MainImageUploader";
 import SubImageUploader from "@/components/SubImageUploader";
 import ActivityTypeSelector from "@/components/ActivityTypeSelector";
 import DetailSessionForm from "@/components/DetailSessionForm";
-import { ProjectTestFormType } from "@/types/projectTestFormType";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  ProjectTestFormType,
+  projectTestSchema,
+} from "@/schema/projectTestSchema";
 
 export default function Home() {
   const methods = useForm<ProjectTestFormType>({
+    resolver: zodResolver(projectTestSchema),
     defaultValues: {
       title: "",
       mainImage: null,
