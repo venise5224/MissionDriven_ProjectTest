@@ -73,7 +73,7 @@ const DetailSessionForm = () => {
             <h3 className="font-bold text-[20px] md:text-[24px] text-[#121212]">
               활동 내용
             </h3>
-            <em className="mt-2 text-[16px] md:text-[18px] text-[#767676]">
+            <em className="mt-2 text-[16px] md:text-[18px] text-[#767676] block">
               날짜별 활동 내용을 간단히 적어주세요
             </em>
 

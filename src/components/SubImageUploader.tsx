@@ -59,7 +59,7 @@ const SubImageUploader = () => {
       <h2 className="font-bold text-[22px] md:text-[28px]">
         추가 이미지 (선택)
       </h2>
-      <em className="mt-2 font-medium text-[18px] md:text-[20px] text-[#767676]">
+      <em className="mt-2 font-medium text-[18px] md:text-[20px] text-[#767676] block">
         최대 4장까지 등록할 수 있어요
       </em>
 

@@ -52,7 +52,7 @@ const MainImageUploader = () => {
               콘텐츠 대표 이미지를
               <br /> 등록해 주세요!
             </strong>
-            <em className="mt-2 font-medium text-[16px] md:text-[22px] text-[#8F8F8F]">
+            <em className="mt-2 font-medium text-[16px] md:text-[22px] text-[#8F8F8F] block">
               1:1 비율의 정사각형 이미지를 추천합니다
             </em>
             <button
