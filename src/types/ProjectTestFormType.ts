@@ -4,5 +4,18 @@ export type ProjectTestFormType = {
   subImages: File[];
   categories: string[];
   activityType: "online" | "offline" | "";
-  sessionDetails: Record<string, string>; // 필요하면 더 구체적으로
+  sessionDetails: {
+    date: string;
+    startTime: {
+      ampm: string;
+      hour: string;
+      minute: string;
+    };
+    endTime: {
+      ampm: string;
+      hour: string;
+      minute: string;
+    };
+    description: string;
+  }[];
 };

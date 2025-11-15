@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
+import ModalManager from "@/components/modal/ModalManager";
 
 export const metadata: Metadata = {
   title: "Misstion Driven FE Project Test",
@@ -31,6 +32,7 @@ export default function RootLayout({
             },
           }}
         />
+        <ModalManager />
         <Header />
         {children}
         <div className="md:hidden">

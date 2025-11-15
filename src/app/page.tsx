@@ -7,7 +7,7 @@ import MainImageUploader from "@/components/MainImageUploader";
 import SubImageUploader from "@/components/SubImageUploader";
 import ActivityTypeSelector from "@/components/ActivityTypeSelector";
 import DetailSessionForm from "@/components/DetailSessionForm";
-import { ProjectTestFormType } from "@/types/ProjectTestFormType";
+import { ProjectTestFormType } from "@/types/projectTestFormType";
 
 export default function Home() {
   const methods = useForm<ProjectTestFormType>({
@@ -17,7 +17,14 @@ export default function Home() {
       subImages: [],
       categories: [],
       activityType: "",
-      sessionDetails: {},
+      sessionDetails: [
+        {
+          date: "",
+          startTime: { ampm: "오전", hour: "10", minute: "00" },
+          endTime: { ampm: "오전", hour: "11", minute: "00" },
+          description: "",
+        },
+      ],
     },
   });
 
