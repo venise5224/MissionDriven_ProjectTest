@@ -5,7 +5,7 @@ export type ProjectTestFormType = {
   categories: string[];
   activityType: "online" | "offline" | "";
   sessionDetails: {
-    date: string;
+    date: Date | null;
     startTime: {
       ampm: string;
       hour: string;

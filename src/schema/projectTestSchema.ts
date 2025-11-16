@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 export const sessionDetailSchema = z.object({
-  date: z.string().nonempty("날짜를 선택해주세요"),
+  date: z
+    .date()
+    .nullable()
+    .refine((v) => v !== null, "날짜를 선택해주세요"),
   startTime: z.object({
     ampm: z.enum(["오전", "오후"]),
     hour: z.string().nonempty("시작 시간을 입력해주세요"),

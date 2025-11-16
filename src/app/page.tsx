@@ -24,7 +24,7 @@ export default function Home() {
       activityType: "",
       sessionDetails: [
         {
-          date: "",
+          date: null,
           startTime: { ampm: "오전", hour: "10", minute: "00" },
           endTime: { ampm: "오전", hour: "11", minute: "00" },
           description: "",

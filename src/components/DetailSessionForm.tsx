@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import TextareaField from "./input/TextareaField";
 import { ProjectTestFormType } from "@/types/projectTestFormType";
+import { DatePicker } from "./calendar/DatePicker";
 
 const DetailSessionForm = () => {
   const {
@@ -19,15 +20,18 @@ const DetailSessionForm = () => {
     name: "sessionDetails",
   });
 
+  // 회차 삭제 핸들러
   const handleDelete = (index: number) => {
     remove(index);
   };
 
+  // 회차 정보 값 구독
   const value = useWatch({
     control,
     name: "sessionDetails",
   });
 
+  // 활동 내용 변경 핸들러
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     index: number
@@ -69,11 +73,10 @@ const DetailSessionForm = () => {
                 <label className="font-semibold text-[16px] md:text-[18px] text-[#565656]">
                   날짜 선택
                 </label>
-                <input
-                  placeholder="날짜를 선택해주세요"
-                  className="flex-1 h-[60px] bg-white border border-[#E5E5E5] rounded-lg placeholder:text-[16px] md:placeholder:text-[20px] placeholder:text-center"
-                />
+
+                <DatePicker index={index} />
               </div>
+
               <div className="flex gap-6 items-center">
                 <label className="font-semibold text-[16px] md:text-[18px] text-[#565656]">
                   시작 시간
@@ -93,6 +96,7 @@ const DetailSessionForm = () => {
                   />
                 </div>
               </div>
+
               <div className="flex gap-6 items-center">
                 <label className="font-semibold text-[16px] md:text-[18px] text-[#565656]">
                   종료 시간
@@ -154,11 +158,12 @@ const DetailSessionForm = () => {
         ))}
       </div>
 
+      {/* 회차 추가 버튼 */}
       <button
         type="button"
         onClick={() =>
           append({
-            date: "",
+            date: null,
             startTime: { ampm: "오전", hour: "", minute: "" },
             endTime: { ampm: "오전", hour: "", minute: "" },
             description: "",
