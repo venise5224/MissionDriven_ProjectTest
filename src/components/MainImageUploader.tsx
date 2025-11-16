@@ -1,9 +1,13 @@
 "use client";
 
+import { ProjectTestFormType } from "@/types/projectTestFormType";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const MainImageUploader = () => {
+  const { setValue } = useFormContext<ProjectTestFormType>();
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -18,7 +22,7 @@ const MainImageUploader = () => {
     // 파일 확장자 검사 (JPG, PNG)
     const validTypes = ["image/jpeg", "image/png"];
     if (!validTypes.includes(file.type)) {
-      alert("JPG 또는 PNG 파일만 업로드할 수 있습니다.");
+      toast("JPG 또는 PNG 파일만 업로드할 수 있습니다.");
       return;
     }
 
@@ -28,6 +32,8 @@ const MainImageUploader = () => {
 
     const url = URL.createObjectURL(file);
     setImage(url);
+
+    setValue("mainImage", file, { shouldValidate: true });
   };
 
   return (

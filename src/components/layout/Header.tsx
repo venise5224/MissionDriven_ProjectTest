@@ -1,6 +1,7 @@
 "use client";
 
 import useCategoryStore from "@/stores/useCategoryStore";
+import { useFormStore } from "@/stores/useFormStore";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -9,6 +10,7 @@ const Header = () => {
   const router = useRouter();
   const selectedCategories = useCategoryStore((state) => state.categories);
   const clearCategories = useCategoryStore((state) => state.clearCategories);
+  const isValid = useFormStore((state) => state.isValid);
 
   const titleMap: Record<string, string> = {
     "/": "과제",
@@ -52,22 +54,45 @@ const Header = () => {
           {titleMap[pathname]}
         </h1>
 
-        {/* 다음으로 버튼 */}
-        <div className="absolute right-5 hidden md:block">
-          <button
-            onClick={handleNext}
-            disabled={selectedCategories.length === 0}
-            className={`w-[120px] h-[38px] text-[16px] font-semibold rounded 
+        {/* CategoryPage 다음으로 버튼 */}
+        {pathname === "/category" && (
+          <div className="absolute right-5 hidden md:block">
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={selectedCategories.length === 0}
+              className={`w-[120px] h-[38px] text-[16px] font-semibold rounded 
             ${
               selectedCategories.length === 0
                 ? "bg-[#D7D7D7] text-white cursor-not-allowed"
                 : "bg-[#03C124] text-white cursor-pointer hover:bg-[#02891A]"
             }
           `}
-          >
-            다음으로
-          </button>
-        </div>
+            >
+              다음으로
+            </button>
+          </div>
+        )}
+
+        {/* HomePage 다음으로 버튼 */}
+        {pathname === "/" && (
+          <div className="absolute right-5 hidden md:block">
+            <button
+              type="submit"
+              form="projectForm"
+              disabled={!isValid}
+              className={`w-[120px] h-[38px] text-[16px] font-semibold rounded 
+            ${
+              !isValid
+                ? "bg-[#D7D7D7] text-white cursor-not-allowed"
+                : "bg-[#03C124] text-white cursor-pointer hover:bg-[#02891A]"
+            }
+          `}
+            >
+              다음으로
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

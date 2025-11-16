@@ -3,9 +3,17 @@
 import Image from "next/image";
 import useCategoryStore from "@/stores/useCategoryStore";
 import Link from "next/link";
+import { useFormContext } from "react-hook-form";
+import { useEffect } from "react";
 
 const CategorySelector = () => {
   const selectedCategory = useCategoryStore((state) => state.categories);
+  const { setValue } = useFormContext();
+
+  // 카테고리 변경 시 부모 폼과 동기화
+  useEffect(() => {
+    setValue("categories", selectedCategory);
+  }, [selectedCategory, setValue]);
 
   return (
     <div className="w-[328px] md:w-[510px] mx-auto md:mx-0">

@@ -12,10 +12,14 @@ import {
   ProjectTestFormType,
   projectTestSchema,
 } from "@/schema/projectTestSchema";
+import { useFormStore } from "@/stores/useFormStore";
+import { useEffect } from "react";
 
 export default function Home() {
+  const setIsValid = useFormStore((state) => state.setIsValid);
   const methods = useForm<ProjectTestFormType>({
     resolver: zodResolver(projectTestSchema),
+    mode: "onChange",
     defaultValues: {
       title: "",
       mainImage: null,
@@ -33,6 +37,12 @@ export default function Home() {
     },
   });
 
+  const { isValid } = methods.formState;
+
+  useEffect(() => {
+    setIsValid(isValid);
+  }, [isValid, setIsValid]);
+
   const onSubmit = (data: ProjectTestFormType) => {
     console.log("폼 제출 데이터:", data);
   };
@@ -41,31 +51,20 @@ export default function Home() {
     <FormProvider {...methods}>
       <main className="md:max-w-[1100px] mx-auto px-4 pb-40 md:px-5">
         <form
+          id="projectForm"
           onSubmit={methods.handleSubmit(onSubmit)}
           className="w-full flex flex-col md:flex-row md:gap-10"
         >
-          <section>
-            <div className="mt-10">
-              <MainImageUploader />
-            </div>
-            <div className="mt-10">
-              <SubImageUploader />
-            </div>
+          <section className="mt-10 flex flex-col gap-10">
+            <MainImageUploader />
+            <SubImageUploader />
           </section>
 
-          <section>
-            <div className="mt-10">
-              <CategorySelector />
-            </div>
-            <div className="mt-10">
-              <ContentTitleInput />
-            </div>
-            <div className="mt-10">
-              <ActivityTypeSelector />
-            </div>
-            <div className="mt-10">
-              <DetailSessionForm />
-            </div>
+          <section className="mt-10 flex flex-col gap-10">
+            <CategorySelector />
+            <ContentTitleInput />
+            <ActivityTypeSelector />
+            <DetailSessionForm />
           </section>
 
           {/* 폼 제출 버튼 ? */}

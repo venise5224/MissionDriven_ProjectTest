@@ -2,11 +2,14 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const SubImageUploader = () => {
   const [images, setImages] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const { setValue, getValues } = useFormContext();
 
   const handleUploaderClick = () => {
     fileInputRef.current?.click();
@@ -22,12 +25,13 @@ const SubImageUploader = () => {
     if (files.length === 0) return;
 
     const validImages: string[] = [];
+    const validFiles: File[] = [];
 
     for (const file of files) {
       // 파일 확장자 검사 (JPG, PNG)
       const validTypes = ["image/jpeg", "image/png"];
       if (!validTypes.includes(file.type)) {
-        alert("JPG 또는 PNG 파일만 업로드할 수 있습니다.");
+        toast("JPG 또는 PNG 파일만 업로드할 수 있습니다.");
         return;
       }
 
@@ -36,21 +40,29 @@ const SubImageUploader = () => {
       if (file.size > maxSize) return;
 
       validImages.push(URL.createObjectURL(file));
+      validFiles.push(file);
     }
 
     if (validImages.length === 0) return;
 
+    // 기존 파일 배열 가져오기
+    const prevFiles = getValues("subImages") || [];
+
     // 재업로드(이미지 교체)
     if (editingIndex !== null) {
-      setImages((prev) => {
-        const updated = [...prev];
-        updated[editingIndex] = validImages[0];
-        return updated;
-      });
+      const updatedFiles = [...prevFiles];
+      updatedFiles[editingIndex] = validFiles[0];
+
+      const updatedImages = [...images];
+      updatedImages[editingIndex] = validImages[0];
+
+      setValue("subImages", updatedFiles);
+      setImages(updatedImages);
       setEditingIndex(null);
       return;
     }
 
+    setValue("subImages", [...validFiles, ...prevFiles].slice(0, 4));
     setImages((prev) => [...validImages, ...prev].slice(0, 4)); // 최대 4장까지만 저장
   };
 
