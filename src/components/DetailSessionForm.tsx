@@ -2,21 +2,53 @@
 
 import useModalStore from "@/stores/useModalStore";
 import Image from "next/image";
-import { useState } from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import TextareaField from "./input/TextareaField";
+import { ProjectTestFormType } from "@/types/projectTestFormType";
+import { DatePicker } from "./calendar/DatePicker";
 
 const DetailSessionForm = () => {
-  const { control, register } = useFormContext();
-  const [value, setValue] = useState("");
+  const {
+    control,
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext<ProjectTestFormType>();
   const openModal = useModalStore((state) => state.openModal);
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: "sessionDetails",
   });
 
+  // 회차 삭제 핸들러
   const handleDelete = (index: number) => {
     remove(index);
+  };
+
+  // 회차 정보 값 구독
+  const value = useWatch({
+    control,
+    name: "sessionDetails",
+  });
+
+  // 활동 내용 변경 핸들러
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    index: number
+  ) => {
+    let input = e.target.value;
+
+    // 800자 제한 (붙여넣기 포함)
+    if (input.length > 800) {
+      input = input.slice(0, 800);
+    }
+
+    // 연속 공백 자동 치환
+    input = input.replace(/\s{2,}/g, " ");
+
+    setValue(`sessionDetails.${index}.description`, input, {
+      shouldValidate: true,
+    });
   };
 
   return (
@@ -41,11 +73,10 @@ const DetailSessionForm = () => {
                 <label className="font-semibold text-[16px] md:text-[18px] text-[#565656]">
                   날짜 선택
                 </label>
-                <input
-                  placeholder="날짜를 선택해주세요"
-                  className="flex-1 h-[60px] bg-white border border-[#E5E5E5] rounded-lg placeholder:text-[16px] md:placeholder:text-[20px] placeholder:text-center"
-                />
+
+                <DatePicker index={index} />
               </div>
+
               <div className="flex gap-6 items-center">
                 <label className="font-semibold text-[16px] md:text-[18px] text-[#565656]">
                   시작 시간
@@ -65,6 +96,7 @@ const DetailSessionForm = () => {
                   />
                 </div>
               </div>
+
               <div className="flex gap-6 items-center">
                 <label className="font-semibold text-[16px] md:text-[18px] text-[#565656]">
                   종료 시간
@@ -94,21 +126,17 @@ const DetailSessionForm = () => {
               <em className="mt-2 text-[16px] md:text-[18px] text-[#767676] block">
                 날짜별 활동 내용을 간단히 적어주세요
               </em>
-
-              <div className="mt-3 md:mt-4 w-full h-[138px] bg-white border border-[#E5E5E5] rounded-lg px-4 flex flex-col justify-between">
-                {/* 입력 영역 */}
-                <textarea
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
+              <div className="mt-3 md:mt-4">
+                <TextareaField
+                  registerProps={register(
+                    `sessionDetails.${index}.description`
+                  )}
+                  value={value[index]?.description || ""}
+                  onChange={(e) => handleChange(e, index)}
+                  error={errors.sessionDetails?.[index]?.description}
                   maxLength={800}
                   placeholder="활동 내용을 간단히 입력해주세요"
-                  className="mt-3 md:mt-4 outline-none text-[16px] md:text-[18px] h-full resize-none"
                 />
-
-                {/* 글자수 표시 */}
-                <p className="pb-3 text-sm text-[#8F8F8F] text-right">
-                  {value.length} / 800자 (최소 8자)
-                </p>
               </div>
             </div>
 
@@ -130,13 +158,14 @@ const DetailSessionForm = () => {
         ))}
       </div>
 
+      {/* 회차 추가 버튼 */}
       <button
         type="button"
         onClick={() =>
           append({
-            date: "",
-            start: { ampm: "오전", hour: "", minute: "" },
-            end: { ampm: "오전", hour: "", minute: "" },
+            date: null,
+            startTime: { ampm: "오전", hour: "", minute: "" },
+            endTime: { ampm: "오전", hour: "", minute: "" },
             description: "",
           })
         }
