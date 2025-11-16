@@ -70,7 +70,7 @@ export function DatePicker({ index }: DateFieldProps) {
         </button>
       </PopoverTrigger>
 
-      <PopoverContent className="p-4 w-[330px] bg-white rounded-lg">
+      <PopoverContent className="p-4 w-[280px] md:w-[330px] bg-white rounded-lg">
         <Calendar
           mode="single"
           selected={tempDate || undefined}

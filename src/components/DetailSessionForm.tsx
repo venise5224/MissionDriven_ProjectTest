@@ -6,6 +6,7 @@ import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import TextareaField from "./input/TextareaField";
 import { ProjectTestFormType } from "@/types/projectTestFormType";
 import { DatePicker } from "./calendar/DatePicker";
+import TimeField from "./TimeField";
 
 const DetailSessionForm = () => {
   const {
@@ -77,45 +78,8 @@ const DetailSessionForm = () => {
                 <DatePicker index={index} />
               </div>
 
-              <div className="flex gap-6 items-center">
-                <label className="font-semibold text-[16px] md:text-[18px] text-[#565656]">
-                  시작 시간
-                </label>
-                <div className="flex flex-1 items-center px-2.5 md:px-4 h-[60px] bg-white border border-[#E5E5E5] rounded-lg">
-                  <button className="w-[52px] h-[38px] bg-[#F7F7F8] border border-[#E5E5E5] rounded-sm font-semibold text-[16px]">
-                    오전
-                  </button>
-                  <input
-                    placeholder="10"
-                    className="w-16 md:w-[140px] text-center placeholder:text-center placeholder:text-[18px] md:placeholder:text-[20px] placeholder:text-[#121212]"
-                  />
-                  <p className="text-[20px] text-[#121212]">:</p>
-                  <input
-                    placeholder="00"
-                    className="w-16 md:w-[140px] text-center placeholder:text-center placeholder:text-[18px] md:placeholder:text-[20px] placeholder:text-[#121212]"
-                  />
-                </div>
-              </div>
-
-              <div className="flex gap-6 items-center">
-                <label className="font-semibold text-[16px] md:text-[18px] text-[#565656]">
-                  종료 시간
-                </label>
-                <div className="flex flex-1 items-center px-2.5 md:px-4 h-[60px] bg-white border border-[#E5E5E5] rounded-lg">
-                  <button className="w-[52px] h-[38px] bg-[#F7F7F8] border border-[#E5E5E5] rounded-sm font-semibold text-[16px]">
-                    오전
-                  </button>
-                  <input
-                    placeholder="11"
-                    className="w-16 md:w-[140px] text-center placeholder:text-center placeholder:text-[18px] md:placeholder:text-[20px] placeholder:text-[#121212]"
-                  />
-                  <p className="text-[20px] text-[#121212]">:</p>
-                  <input
-                    placeholder="00"
-                    className="w-16 md:w-[140px] text-center placeholder:text-center placeholder:text-[18px] md:placeholder:text-[20px] placeholder:text-[#121212]"
-                  />
-                </div>
-              </div>
+              <TimeField index={index} type="startTime" />
+              <TimeField index={index} type="endTime" />
             </div>
 
             {/* 활동 내용 */}
@@ -164,8 +128,8 @@ const DetailSessionForm = () => {
         onClick={() =>
           append({
             date: null,
-            startTime: { ampm: "오전", hour: "", minute: "" },
-            endTime: { ampm: "오전", hour: "", minute: "" },
+            startTime: { ampm: "오전", hour: "10", minute: "00" },
+            endTime: { ampm: "오전", hour: "11", minute: "00" },
             description: "",
           })
         }
