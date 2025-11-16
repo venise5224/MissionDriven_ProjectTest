@@ -6,7 +6,7 @@ import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import TextareaField from "./input/TextareaField";
 import { ProjectTestFormType } from "@/types/projectTestFormType";
 import { DatePicker } from "./calendar/DatePicker";
-import TimeField from "./TimeField";
+import TimeField from "./input/TimeField";
 
 const DetailSessionForm = () => {
   const {
